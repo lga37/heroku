@@ -21,8 +21,8 @@ class BD {
 		#$log->pushHandler(new RotatingFileHandler(LOGS.'log-'.date('d-m-Y').'-'.SITE, 5, Logger::DEBUG));
 
 		#$this->log = $log;
-
-		extract(HEROKU); # $HOST $NAME $USER $PASS
+        #echo "<pre>";print_r($_SERVER);die;
+		$_SERVER['HTTP_HOST']=='localhost'? extract(BD) : extract(HEROKU); # $HOST $NAME $USER $PASS
 
 		if($type==="mysql"){
 			$dsn = sprintf("mysql:host=%s;dbname=%s",$HOST,$NAME);

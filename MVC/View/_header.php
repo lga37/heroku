@@ -17,7 +17,6 @@
 <body class="container-fluid">
     <header>
 
-
         <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
             <a class="navbar-brand" href="<?= URL ?>"><b><?= SITE ?></b></a>
 
@@ -88,17 +87,18 @@
 
             <form class="d-flex" method="POST" action="<?= URL ?>?c=produtos&a=produtosnome">
 
-                    <input class="form-control mr-sm-2"
-                    name="q" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn btn-outline-primary">Search</button>
+                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn btn-outline-primary">Search</button>
 
             </form>
 
 
         </nav>
-
-
     </header>
+
+
+
+
 
     <div class="row">
 
@@ -109,7 +109,7 @@
                 <div class="col-md-2">
                     <div id="menu-lateral">
                         <br>
-                        <?php (new \APP\Model\Categoria())->render(); ?>
+                        <?php (new \APP\Model\Categoria())->infiniteMenu(); ?>
                         <br><br>
                     </div><!-- menu-lateral -->
                 </div><!-- col-md-3 -->

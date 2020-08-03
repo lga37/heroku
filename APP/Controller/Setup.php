@@ -77,8 +77,9 @@ PRODS;
 
 PRODS_CATEGS;
 
+        $_SERVER['HTTP_HOST']=='localhost'? extract(BD) : extract(HEROKU); # $HOST $NAME $USER $PASS
 
-		extract(HEROKU); # $HOST $NAME $USER $PASS
+		#extract(HEROKU); # $HOST $NAME $USER $PASS
 
 		$cn = new \mysqli($HOST, $USER, $PASS, $NAME);
 		#$cn = new \mysqli($host,$user,$pass,$name);

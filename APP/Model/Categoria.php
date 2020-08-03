@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace APP\Model;
 use MVC\Model\Model as ModelMVC;
@@ -25,7 +25,7 @@ class Categoria extends ModelMVC {
 		}
 	}
 
-	/** 
+	/**
 
 	*/
 	function getCategsByProdId(int $prod_id,string $campos='*') {
@@ -39,5 +39,33 @@ class Categoria extends ModelMVC {
 	    var_dump($ret);
 	    return $ret;
 	}
+	function getAllCategsOrderByDad() {
+
+        $tabela = $this->getTable();
+        $campos = 'id,nome,pai';
+        $pai = "pai";
+	    $sql = sprintf("SELECT %s FROM %s ORDER BY %s;",$campos,$tabela,$pai);
+
+	    #echo $sql;die;
+	    $ret = $this->query($sql);
+	    #var_dump($ret);die;
+	    return $ret;
+	}
+
+    public function infiniteMenu ()
+    {
+        $all = [];
+        $hasChildren = [];
+        $categs = $this->getAllCategsOrderByDad();
+
+        foreach($categs as $k=>$row){
+            $all[$row["id"]] = $row;
+            $hasChildren[$row["pai"]] = true;
+        }
+        echo menuInfinitoBS4($all, $hasChildren, "0");
+
+    }
+
+
 
 }

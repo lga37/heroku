@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace APP\Model;
 
@@ -18,28 +18,29 @@ class Produto extends ModelMVC {
 			$rr= $this->add($produto); #ele vai retornar 0 pq o id nao e serial
 				#echo $rr;die;
 			return $rr;
-		} 
+		}
 		return (array) $tem_erros;
 	}
 
-	/** 
+	/**
 	Para a vitrine da home
 	*/
-	function getProdutosByRand(int $qtd=20): array 
+	function getProdutosByRand(int $qtd=20): array
 	{
 	    $tabela = $this->getTable();
 	    $sql = sprintf("SELECT * FROM `$tabela` ORDER BY rand() LIMIT $qtd;");
 	    return $this->query($sql);
+	    #var_dump($sql);die;
 	    #$r= $this->query($sql);
 	    #var_dump($r);die;
 	}
 
 
 
-	/** 
+	/**
 	Para a vitrine da home
 	*/
-	function getCategoriasByProdID(int $prod_id): ?array 
+	function getCategoriasByProdID(int $prod_id): ?array
 	{
 
 		$ret = $this->setTable('prods_categs')->getAllBy($prod_id,'prod_id','categ_id');
@@ -56,19 +57,19 @@ class Produto extends ModelMVC {
 	}
 
 
-	/** 
+	/**
 	Nao funciona o carregamento horizontal getProdutosByCategId
 	*/
-	function getProdutosByCategId(int $categ_id,string $order='id ASC', int $pag=1): ?array 
+	function getProdutosByCategId(int $categ_id,string $order='id ASC', int $pag=1): ?array
 	{
 	    #$where="categ_id=?";
 	    #$tabela = $this->getTable();
 	    $sql = "
 			SELECT p.*
 			#,c.nome as nomecateg,c.id as idcateg
-			FROM prods_categs pc 
-			#INNER JOIN categs c ON (pc.categ_id=c.id) 
-			INNER JOIN prods  p ON (pc.prod_id=p.id) 
+			FROM prods_categs pc
+			#INNER JOIN categs c ON (pc.categ_id=c.id)
+			INNER JOIN prods  p ON (pc.prod_id=p.id)
 			WHERE pc.categ_id=?
 	    	";
 
@@ -91,15 +92,15 @@ class Produto extends ModelMVC {
 	}
 
 
-	function getCountProdutosByCategId(int $categ_id,string $order='id ASC', int $pag=1): ?int 
+	function getCountProdutosByCategId(int $categ_id,string $order='id ASC', int $pag=1): ?int
 	{
 	    $sql = "
 
-				SELECT count(1) as total FROM ( 
+				SELECT count(1) as total FROM (
 
 					SELECT p.id
-					FROM prods_categs pc 
-					INNER JOIN prods  p ON (pc.prod_id=p.id) 
+					FROM prods_categs pc
+					INNER JOIN prods  p ON (pc.prod_id=p.id)
 					WHERE pc.categ_id=?
 
 
@@ -121,7 +122,7 @@ class Produto extends ModelMVC {
 
 	    $prods_da_pagina = $this->getAllPaginate('*',$order,$pag);
 	    foreach ($prods_da_pagina as $k=>$prod) {
-	    	
+
 	    	$categs_do_registro = $this->getCategoriasByProdID($prod['id']);
 
 	    	$prods_da_pagina[$k]['categs']=$categs_do_registro;
@@ -135,7 +136,7 @@ class Produto extends ModelMVC {
 
 
 
-	/** 
+	/**
 	Como a instrucao LIKE segue formatacao diferente, criei este metodo so para isso.
 	As demais buscas vao direto para o BD.
 	*/
@@ -149,7 +150,7 @@ class Produto extends ModelMVC {
 	}
 
 
-	/** 
+	/**
 	Essa e a funcao que faz a checagem antes de mandar para o BD
 	*/
 	function invalid(array $produto){
@@ -173,9 +174,9 @@ class Produto extends ModelMVC {
 	    $sql = sprintf("
 			SELECT DISTINCT p.*
 			,c.nome as nomecateg,c.id as idcateg
-			FROM prods_categs pc 
-			INNER JOIN categs c ON (pc.categ_id=c.id) 
-			INNER JOIN prods  p ON (pc.prod_id=p.id) 
+			FROM prods_categs pc
+			INNER JOIN categs c ON (pc.categ_id=c.id)
+			INNER JOIN prods  p ON (pc.prod_id=p.id)
 	    ");
 			#WHERE pc.categ_id=?; nao aceita comentarios dentro do sprintf Nao pode por ;
 
@@ -200,9 +201,9 @@ class Produto extends ModelMVC {
 	    $sql = sprintf("
 			SELECT DISTINCT p.*
 			,c.nome as nomecateg,c.id as idcateg
-			FROM prods_categs pc 
-			INNER JOIN categs c ON (pc.categ_id=c.id) 
-			INNER JOIN prods  p ON (pc.prod_id=p.id) 
+			FROM prods_categs pc
+			INNER JOIN categs c ON (pc.categ_id=c.id)
+			INNER JOIN prods  p ON (pc.prod_id=p.id)
 	    ");
 			#WHERE pc.categ_id=?; nao aceita comentarios dentro do sprintf Nao pode por ;
 
@@ -218,7 +219,7 @@ class Produto extends ModelMVC {
 	}
 
 
-	/** 
+	/**
 	Aqui vem todas as checagens possiveis
 	*/
 	private function valida__nome(string $nome) : bool {

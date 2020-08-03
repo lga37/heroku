@@ -18,4 +18,16 @@ class Categorias extends Controller{
     }
 
 
+ 
+
+
+
+
+
+
+
+
+
+
+
 }
