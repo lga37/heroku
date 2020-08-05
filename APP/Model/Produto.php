@@ -29,7 +29,8 @@ class Produto extends ModelMVC {
 	{
 	    $tabela = $this->getTable();
 	    $sql = sprintf("SELECT * FROM `$tabela` ORDER BY rand() LIMIT $qtd;");
-	    return $this->query($sql);
+		echo $sql;
+		return $this->query($sql);
 	    #var_dump($sql);die;
 	    #$r= $this->query($sql);
 	    #var_dump($r);die;
